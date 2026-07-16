@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FuelUp</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div class="app-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+        <div class="sidebar-logo">
+            <h1>⚡ FuelUp</h1>
+        </div>
+        <nav class="sidebar-nav">
+            <button class="nav-btn active-nav" data-page="recipes">🍳 Recipes</button>
+            <button class="nav-btn" data-page="saved">❤️ Saved</button>
+            <button class="nav-btn" data-page="chat">🤖 Chat</button>
+            <button class="nav-btn" data-page="goals">🎯 Goals</button>
+        </nav>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+
+        <!-- RECIPES PAGE -->
+        <div class="page active-page" id="page-recipes">
+            <h2 class="page-title">What's in your fridge?</h2>
+            <p class="pantry-note">We assume you always have: salt, pepper, garlic, olive oil, chili powder, paprika & cumin</p>
+            <div class="input-row">
+            <input type="text" id="ingredient-input" placeholder="e.g. eggs, chicken, tortilla..." />
+            <button id="add-btn">Add</button>
+            </div>
+            <div id="ingredient-tags"></div>
+
+            <h2 class="page-title" style="margin-top: 30px">What's the vibe?</h2>
+            <div class="filters">
+                <button class="filter-btn" data-filter="quick">⚡ Quick</button>
+                <button class="filter-btn" data-filter="high-protein">💪 High Protein</button>
+                <button class="filter-btn" data-filter="sweet">🍫 Sweet</button>
+                <button class="filter-btn" data-filter="savoury">🧀 Savoury</button>
+                <button class="filter-btn" data-filter="spicy">🌶️ Spicy</button>
+                <button class="filter-btn" data-filter="unique">✨ Unique</button>
+            </div>
+            
+            <div class="cooking-methods">
+                <p class="method-label">Cooking Method</p>
+                <div class="method-btns-row">
+                    <button class="method-btn active-method" data-method="stovetop">🍳 Stovetop</button>
+                    <button class="method-btn" data-method="airfryer">💨 Air Fryer</button>
+                    <button class="method-btn" data-method="oven">🔥 Oven</button>
+                    <button class="method-btn" data-method="microwave">📡 Microwave</button>
+                </div>
+            </div>
+
+            <button id="search-btn">🔍 Find Recipes</button>
+
+            <h2 class="page-title" style="margin-top: 30px">Recipes for you</h2>
+            <div id="recipe-grid">
+                <p class="placeholder-text">Add ingredients and pick a vibe to get started 🍳</p>
+            </div>
+        </div>
+
+        <!-- SAVED PAGE -->
+        <div class="page" id="page-saved">
+            <h2 class="page-title">❤️ Saved Recipes</h2>
+            <div id="saved-grid">
+            <p class="placeholder-text">No saved recipes yet — hit ♡ to save one!</p>
+            </div>
+        </div>
+
+        <!-- CHAT PAGE -->
+        <div class="page" id="page-chat">
+            <h2 class="page-title">🤖 Ask FuelUp AI</h2>
+            <div id="chat-box"></div>
+            <div class="chat-input-row">
+                <textarea id="chat-input" placeholder="e.g. high protein breakfast under 400 cal?" rows="2"></textarea>
+                <button id="mic-btn">🎤</button>
+                <button id="chat-send-btn">Send</button>
+            </div>
+        </div>
+
+        <!-- GOALS PAGE -->
+        <div class="page" id="page-goals">
+            <h2 class="page-title">🎯 My Macro Goals</h2>
+            <div class="goals-form">
+            <div class="goal-input">
+                <label>Meal Type</label>
+                <select id="goal-meal">
+                <option value="breakfast">🌅 Breakfast</option>
+                <option value="lunch">☀️ Lunch</option>
+                <option value="dinner">🌙 Dinner</option>
+                <option value="snack">⚡ Snack</option>
+                </select>
+            </div>
+            <div class="goal-input">
+                <label>Calorie Range</label>
+                <div class="input-row">
+                <input type="number" id="goal-cal-min" placeholder="Min e.g. 700" />
+                <input type="number" id="goal-cal-max" placeholder="Max e.g. 800" />
+                </div>
+            </div>
+            <div class="goal-input">
+                <label>Minimum Protein (g)</label>
+                <input type="number" id="goal-protein" placeholder="e.g. 65" />
+            </div>
+            <div class="goal-input">
+                <label>Max Carbs (g) — optional</label>
+                <input type="number" id="goal-carbs" placeholder="e.g. 50" />
+            </div>
+            <div class="goal-input">
+                <label>Max Fat (g) — optional</label>
+                <input type="number" id="goal-fat" placeholder="e.g. 30" />
+            </div>
+            <button id="goals-search-btn">🔍 Find Recipes for my Goals</button>
+            </div>
+
+            <div id="goals-grid">
+                <p class="placeholder-text">Set your goals and find recipes! 🎯</p>
+            </div>
+
+        </div>
+
+        </main>
+    </div>
+
+    <!-- MODAL -->
+    <div id="recipe-modal" class="modal-overlay">
+        <div class="modal-box">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <div id="modal-content"></div>
+        </div>
+    </div>
+
+    <!-- BOTTOM NAV (mobile only) -->
+    <nav class="bottom-nav">
+     <button class="bottom-nav-btn active-nav" data-page="recipes">
+        <span class="nav-icon">🍳</span>
+        <span>Recipes</span>
+     </button>
+     <button class="bottom-nav-btn" data-page="saved">
+        <span class="nav-icon">❤️</span>
+        <span>Saved</span>
+     </button>
+     <button class="bottom-nav-btn" data-page="chat">
+        <span class="nav-icon">🤖</span>
+        <span>Chat</span>
+     </button>
+     <button class="bottom-nav-btn" data-page="goals">
+        <span class="nav-icon">🎯</span>
+        <span>Goals</span>
+     </button>
+    </nav>
+
+    <script src="script.js"></script>
+    </body>
+</html>
