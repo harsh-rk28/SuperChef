@@ -172,7 +172,7 @@ async function sendMessage() {
                     // API CAREFUL // 
         },
         body: JSON.stringify({
-          model: 'llama-3.3-70b-versatile',
+          model: 'openai/gpt-oss-120b',
           messages: chatHistory,
           max_tokens: 1024,
         })
@@ -218,7 +218,7 @@ async function generateRecipes() {
                             // API CAREFUL // 
         },
         body: JSON.stringify({
-          model: 'llama-3.3-70b-versatile',
+          model: 'openai/gpt-oss-120b',
           messages: [
             {
               role: 'user',
@@ -553,7 +553,7 @@ document.getElementById('goals-search-btn').addEventListener('click', async func
                    // API CAREFUL
         },
         body: JSON.stringify({
-          model: 'llama-3.3-70b-versatile',
+          model: 'openai/gpt-oss-120b',
           messages: [
             {
               role: 'user',
