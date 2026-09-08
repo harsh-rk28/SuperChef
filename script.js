@@ -265,7 +265,7 @@ async function generateRecipes() {
               }`
             }
           ],
-          max_tokens: 1024,
+          max_tokens: 2500,
         })
       }
     )
@@ -588,7 +588,7 @@ document.getElementById('goals-search-btn').addEventListener('click', async func
               }`
             }
           ],
-          max_tokens: 2048,
+          max_tokens: 2500,
         })
       }
     )
