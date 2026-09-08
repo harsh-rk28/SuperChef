@@ -4,6 +4,7 @@ let savedRecipes = JSON.parse(localStorage.getItem('savedRecipes')) || []
 let activeMethod = 'stovetop'
 let isListening = false
 let chatHistory = []
+let proteinSources = []
 
 // ===== INGREDIENTS =====
 const ingredientInput = document.getElementById('ingredient-input')
@@ -163,12 +164,11 @@ async function sendMessage() {
 
   try {
     const response = await fetch(
-      'https://api.groq.com/openai/v1/chat/completions',
+      '/api/chat',
       {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer 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',
                     // API CAREFUL // 
         },
         body: JSON.stringify({
@@ -210,12 +210,11 @@ async function generateRecipes() {
 
   try {
     const response = await fetch(
-      'https://api.groq.com/openai/v1/chat/completions',
+      '/api/chat',
       {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer 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',
                             // API CAREFUL // 
         },
         body: JSON.stringify({
@@ -546,13 +545,12 @@ document.getElementById('goals-search-btn').addEventListener('click', async func
 
   try {
     const response = await fetch(
-      'https://api.groq.com/openai/v1/chat/completions',
+      '/api/chat',
       {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer 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',
-                                      // API CAREFUL
+                   // API CAREFUL
         },
         body: JSON.stringify({
           model: 'llama-3.3-70b-versatile',
@@ -568,6 +566,8 @@ document.getElementById('goals-search-btn').addEventListener('click', async func
               
               Each recipe MUST fit within these targets.
               For steps: be detailed and friendly. Include exact measurements, temperatures, and timings. End with a fun encouraging message.
+              Preferred protein sources: ${proteinSources.length > 0 ? proteinSources.join(', ') : 'any protein source'}.
+              ONLY use these protein sources in recipes. Do not suggest recipes with other proteins. Each individual recipe should use ONLY ONE of the preferred proteins — don't combine multiple protein sources in the same recipe.
               Assume the user always has: salt, pepper, garlic, olive oil, chili powder, paprika, cumin.
               
               Return ONLY a JSON object, no extra text, no markdown, exactly like this:
@@ -657,3 +657,37 @@ if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
 } else {
   micBtn.style.display = 'none'
 }
+
+
+// ===== PROTEIN SOURCES =====
+const customProteinInput = document.getElementById('custom-protein')
+const addProteinBtn = document.getElementById('add-protein-btn')
+const proteinTagsDiv = document.getElementById('protein-tags')
+
+function renderProteinTags() {
+  proteinTagsDiv.innerHTML = ''
+  proteinSources.forEach(function(protein, index) {
+    const tag = document.createElement('div')
+    tag.className = 'tag'
+    tag.innerHTML = `${protein} <span onclick="removeProtein(${index})">✕</span>`
+    proteinTagsDiv.appendChild(tag)
+  })
+}
+
+function removeProtein(index) {
+  proteinSources.splice(index, 1)
+  renderProteinTags()
+}
+
+addProteinBtn.addEventListener('click', function() {
+  const value = customProteinInput.value.trim().toLowerCase()
+  if (value === '') return
+  if (proteinSources.includes(value)) return
+  proteinSources.push(value)
+  customProteinInput.value = ''
+  renderProteinTags()
+})
+
+customProteinInput.addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') addProteinBtn.click()
+})
