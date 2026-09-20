@@ -219,6 +219,7 @@ async function generateRecipes() {
         },
         body: JSON.stringify({
           model: 'openai/gpt-oss-120b',
+          reasoning_effort: 'low',
           messages: [
             {
               role: 'user',
@@ -240,8 +241,9 @@ async function generateRecipes() {
               'Creative, unique, restaurant-style recipes — loaded dishes, fusion, creative sauces. NOT basic boring meals. If recipe has a cultural name like Korean or Mexican it MUST use authentic ingredients from that cuisine.' : 
               'Suggest balanced, healthy recipes.'}
 
-              For steps: be detailed and friendly. Include exact measurements, temperatures, and timings. End with a fun encouraging message.
-              
+
+              For steps: write natural flowing sentences only. Do NOT include step numbers, "Step 1", "1.", or standalone numbers anywhere. Just write it as one continuous friendly paragraph with exact measurements, temperatures, and timings. End with a fun encouraging message.
+              Make sure the recipe NAME accurately reflects what the dish actually is — don't call something a pancake, wrap, or bowl if it isn't actually shaped/served that way. Use REAL, recognizable dish names when applicable (e.g. "Chicken Taquitos" or "Chicken Burrito" instead of generic "Mexican Chicken Wrap"). Keep names short and punchy.
               IMPORTANT: You do NOT need to use ALL the user ingredients. Pick the best 2-4 that work well together for each recipe. The user is telling you what they HAVE available, not what must all be used.
 
               Assume the user always has: salt, pepper, garlic, olive oil, chili powder, paprika, cumin.
@@ -261,6 +263,7 @@ async function generateRecipes() {
                     "matchScore": 3,
                     "ingredients": ["2 large eggs", "200g chicken breast", "100g spinach"],
                     "steps": "Heat 1 tbsp olive oil in a pan over medium heat. Season 200g chicken breast with salt, pepper and paprika. Cook for 8 minutes each side until golden brown and cooked through. Rest for 2 minutes before slicing. Serve hot and enjoy your meal — you crushed it! 💪"
+                  }
                 ]
               }`
             }
