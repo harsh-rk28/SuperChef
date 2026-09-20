@@ -554,10 +554,11 @@ document.getElementById('goals-search-btn').addEventListener('click', async func
         },
         body: JSON.stringify({
           model: 'openai/gpt-oss-120b',
+          reasoning_effort: 'low',
           messages: [
             {
               role: 'user',
-              content: `You are a fitness recipe assistant. Generate 6 recipes for:
+              content: `You are a fitness recipe assistant. Generate 3 recipes for:
               Meal type: ${meal}.
               Calorie range: ${calMin || 'no minimum'} to ${calMax || 'no maximum'} kcal.
               Minimum protein: ${protein || 'no minimum'}g.
