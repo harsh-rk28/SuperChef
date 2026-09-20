@@ -566,7 +566,7 @@ document.getElementById('goals-search-btn').addEventListener('click', async func
               Max fat: ${fat || 'no limit'}g.
               
               Each recipe MUST fit within these targets.
-              For steps: be detailed and friendly. Include exact measurements, temperatures, and timings. End with a fun encouraging message.
+              For steps: write natural flowing sentences only. Do NOT include step numbers, "Step 1", "1.", or standalone numbers anywhere. Just write it as one continuous friendly paragraph with exact measurements, temperatures, and timings. End with a fun encouraging message.
               Preferred protein sources: ${proteinSources.length > 0 ? proteinSources.join(', ') : 'any protein source'}.
               ONLY use these protein sources in recipes. Do not suggest recipes with other proteins. Each individual recipe should use ONLY ONE of the preferred proteins — don't combine multiple protein sources in the same recipe.
               Assume the user always has: salt, pepper, garlic, olive oil, chili powder, paprika, cumin.
